@@ -5,14 +5,14 @@ import {
 } from 'react-native';
 
 
-const TestScreen = () => {
+const SignInScreen = () => {
     return (
         <View>
             <Text>
-                Hello World!
+                Hello World! This is SignInScreen
             </Text>
         </View>
     )
 }
 
-export default TestScreen;
+export default SignInScreen;
