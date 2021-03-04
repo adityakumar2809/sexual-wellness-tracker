@@ -5,13 +5,24 @@ import {
     TextInput,
     Button,
     StyleSheet
-} from 'react-native'
+} from 'react-native';
+import * as SQLite from 'expo-sqlite';
 
+
+const db = SQLite.openDatabase('db.db');
 
 const SignInScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const authenticateUser = (email, password) => {
+        db.transaction((tx) => {
+            tx.executeSql('SELECT * FROM USERS WHERE email = ? AND password = ?', [email, password], (_, { rows }) =>
+                console.log(JSON.stringify(rows))
+            );
+        });
+    }
 
     return (
         <View>
@@ -40,7 +51,10 @@ const SignInScreen = ({ navigation }) => {
 
             <Button
                 title='Submit'
-                onPress={() => console.log({ email, password })}
+                onPress={() => {
+                    console.log({ email, password });
+                    authenticateUser(email, password);
+                }}
             />
 
             <Button
