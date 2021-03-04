@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	createAppContainer,
 	createSwitchNavigator
 } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import * as SQLite from 'expo-sqlite';
 
 import LoadingScreen from './src/screens/LoadingScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
@@ -18,6 +19,8 @@ import ProfileScreen from './src/screens/ProfileScreen';
 
 import { setNavigator } from './src/navigationRef';
 
+
+const db = SQLite.openDatabase('db.db');
 
 const loginFlow = createStackNavigator({
 	SignUp: SignUpScreen,
@@ -42,6 +45,23 @@ const appFlow = createSwitchNavigator({
 const App = createAppContainer(appFlow);
 
 export default () => {
+
+	useEffect(() => {
+		db.transaction((tx) => {
+			tx.executeSql(
+				`CREATE TABLE IF NOT EXISTS
+					USERS (
+						ID INTEGER PRIMARY KEY NOT NULL,
+						EMAIL TEXT,
+						PHONE TEXT,
+						PASSWORD TEXT,
+						UNIQUEHASH TEXT
+					);
+				`
+			);
+		});
+	}, [])
+
 	return (
 		<App
 			ref={(navigator) => {
