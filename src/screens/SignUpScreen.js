@@ -48,9 +48,15 @@ const SignUpScreen = ({ navigation }) => {
                 autoCorrect={false}
                 style={styles.textInputStyle}
             />
+
             <Button
                 title='Submit'
                 onPress={() => console.log({ email, password, phone })}
+            />
+
+            <Button
+                title='SignIn Instead'
+                onPress={() => navigation.navigate('SignIn')}
             />
         </View>
     )
