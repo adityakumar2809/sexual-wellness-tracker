@@ -34,8 +34,8 @@ const mainFlow = createBottomTabNavigator({
 });
 
 const appFlow = createSwitchNavigator({
-	Loading: LoadingScreen,
 	loginFlow,
+	Loading: LoadingScreen,
 	mainFlow
 });
 
