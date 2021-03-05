@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
@@ -31,6 +31,21 @@ const EditProfileScreen = ({navigation}) => {
     const [dob, setDob] = useState('');
 
     const user_hash = navigation.getParam('user_hash');
+
+    useEffect(() => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                'SELECT * FROM USERS WHERE UNIQUEHASH = ?', 
+                [user_hash],
+                (_, { rows }) => {
+                    const user_object = rows['_array'][0]
+                    setFirstName(user_object['FIRST_NAME']);
+                    setLastName(user_object['LAST_NAME']);
+                    setDob(user_object['DOB']);
+                }
+            );
+        });
+    }, [])
 
     return (
         <View>
