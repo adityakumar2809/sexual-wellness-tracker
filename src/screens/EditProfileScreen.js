@@ -67,9 +67,10 @@ const EditProfileScreen = ({navigation}) => {
 
             <Button
                 title='Submit'
-                onPress={() => { 
+                onPress={ async () => { 
                     console.log({ firstName, lastName, dob });
-                    editProfileDetails(firstName, lastName, dob, user_hash);
+                    await editProfileDetails(firstName, lastName, dob, user_hash);
+                    navigation.navigate('mainFlow');
                 }}
             />
         </View>
