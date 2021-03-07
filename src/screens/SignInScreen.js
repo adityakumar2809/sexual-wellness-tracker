@@ -18,8 +18,12 @@ const SignInScreen = ({ navigation }) => {
 
     const authenticateUser = (email, password) => {
         db.transaction((tx) => {
-            tx.executeSql('SELECT * FROM USERS WHERE email = ? AND password = ?', [email, password], (_, { rows }) =>
-                console.log(JSON.stringify(rows))
+            tx.executeSql('SELECT * FROM USERS WHERE email = ? AND password = ?',
+                [email, password],
+                (_, { rows }) => {
+                    const user_hash = rows['_array'][0]['UNIQUEHASH'];
+                    navigation.navigate('EditProfile', { user_hash: user_hash })
+                }
             );
         });
     }
