@@ -65,7 +65,7 @@ const SignUpScreen = ({ navigation }) => {
     return (
         <View>
             <Text>
-                Hello World! This is SignUpScreen
+                Hello World! This is SignUp
             </Text>
 
             <Text>Email</Text>
