@@ -55,7 +55,10 @@ export default () => {
 						EMAIL TEXT,
 						PHONE TEXT,
 						PASSWORD TEXT,
-						UNIQUEHASH TEXT
+						UNIQUEHASH TEXT,
+						FIRST_NAME TEXT,
+						LAST_NAME TEXT,
+						DOB DATE
 					);
 				`
 			);
