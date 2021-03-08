@@ -16,10 +16,10 @@ const AddDataScreen = () => {
     const [periodStartDate, setPeriodStartDate] = useState(null)
     const [periodEndDate, setPeriodEndDate] = useState(null)
 
-    const dropTable = () => {
+    const dropTable = (table_name) => {
         db.transaction((tx) => {
             tx.executeSql(
-                `DELETE FROM periods`,
+                `DELETE FROM ${table_name}`,
                 []
             );
         });
@@ -76,7 +76,7 @@ const AddDataScreen = () => {
                 <Button
                     title='Clear Database'
                     onPress={() => {
-                        dropTable();
+                        dropTable('periods');
                     }}
                 />
             </View>
