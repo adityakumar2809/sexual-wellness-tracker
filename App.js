@@ -72,6 +72,19 @@ export default () => {
 					);
 				`
 			);
+
+			tx.executeSql('DROP TABLE coituses')
+			
+			tx.executeSql(
+				`CREATE TABLE IF NOT EXISTS
+					coituses (
+						id INTEGER PRIMARY KEY NOT NULL,
+						date DATE,
+						instantaneous_protection_used BOOL,
+						instantaneous_protection_type TEXT
+					);
+				`
+			);
 		});
 	}, [])
 
