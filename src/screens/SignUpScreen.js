@@ -20,7 +20,7 @@ const SignUpScreen = ({ navigation }) => {
     const dropTable = () => {
         db.transaction((tx) => {
             tx.executeSql(
-                `DROP TABLE users`,
+                `DELETE FROM users`,
                 []
             );
         });

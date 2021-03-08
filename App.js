@@ -37,9 +37,9 @@ const mainFlow = createBottomTabNavigator({
 });
 
 const appFlow = createSwitchNavigator({
+	mainFlow,
 	loginFlow,
-	Loading: LoadingScreen,
-	mainFlow
+	Loading: LoadingScreen
 });
 
 const App = createAppContainer(appFlow);
@@ -59,6 +59,16 @@ export default () => {
 						first_name TEXT,
 						last_name TEXT,
 						dob DATE
+					);
+				`
+			);
+
+			tx.executeSql(
+				`CREATE TABLE IF NOT EXISTS
+					periods (
+						id INTEGER PRIMARY KEY NOT NULL,
+						start_date DATE,
+						end_date DATE
 					);
 				`
 			);
