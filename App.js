@@ -50,15 +50,15 @@ export default () => {
 		db.transaction((tx) => {
 			tx.executeSql(
 				`CREATE TABLE IF NOT EXISTS
-					USERS (
-						ID INTEGER PRIMARY KEY NOT NULL,
-						EMAIL TEXT,
-						PHONE TEXT,
-						PASSWORD TEXT,
-						UNIQUEHASH TEXT,
-						FIRST_NAME TEXT,
-						LAST_NAME TEXT,
-						DOB DATE
+					users (
+						id INTEGER PRIMARY KEY NOT NULL,
+						email TEXT,
+						phone TEXT,
+						password TEXT,
+						unique_hash TEXT,
+						first_name TEXT,
+						last_name TEXT,
+						dob DATE
 					);
 				`
 			);

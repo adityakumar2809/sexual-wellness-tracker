@@ -20,30 +20,30 @@ const SignUpScreen = ({ navigation }) => {
     const dropTable = () => {
         db.transaction((tx) => {
             tx.executeSql(
-                `DELETE FROM USERS`,
+                `DROP TABLE users`,
                 []
             );
         });
         console.log('Database Cleaned!!');
     }
 
-    const getUserHash = async (email, phone, password) => {
+    const getUniqueHash = async (email, phone, password) => {
         var length = 20;
-        var user_hash = '';
+        var unique_hash = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         var charactersLength = characters.length;
         for ( var i = 0; i < length; i++ ) {
-            user_hash += characters.charAt(
+            unique_hash += characters.charAt(
                 Math.floor(Math.random() * charactersLength)
             );
         }
-        return user_hash;
+        return unique_hash;
     }
 
     const addNewUser = async (email, phone, password) => {
         
         // API LOGIC TO BE IMPLEMENTED HERE
-        const user_hash = await getUserHash(
+        const unique_hash = await getUniqueHash(
             email,
             phone,
             password
@@ -51,15 +51,15 @@ const SignUpScreen = ({ navigation }) => {
 
         db.transaction((tx) => {
             tx.executeSql(
-                `INSERT INTO USERS (email, phone, password, uniquehash) VALUES (?, ?, ?, ?)`,
-                [email, phone, password, user_hash]
+                `INSERT INTO users (email, phone, password, unique_hash) VALUES (?, ?, ?, ?)`,
+                [email, phone, password, unique_hash]
             );
-            tx.executeSql('SELECT * FROM USERS', [], (_, { rows }) =>
+            tx.executeSql('SELECT * FROM users', [], (_, { rows }) =>
                 console.log(JSON.stringify(rows))
             );
         });
 
-        return user_hash;
+        return unique_hash;
     }
 
     return (
@@ -101,8 +101,8 @@ const SignUpScreen = ({ navigation }) => {
                 title='Submit'
                 onPress={async () => { 
                     console.log({ email, password, phone });
-                    const user_hash = await addNewUser(email, phone, password);
-                    navigation.navigate('EditProfile', { user_hash: user_hash });
+                    const unique_hash = await addNewUser(email, phone, password);
+                    navigation.navigate('EditProfile', { unique_hash: unique_hash });
                 }}
             />
 

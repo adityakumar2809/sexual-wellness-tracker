@@ -11,11 +11,11 @@ import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('db.db');
 
-const editProfileDetails = (firstName, lastName, dob, user_hash) => {
+const editProfileDetails = (firstName, lastName, dob, unique_hash) => {
     db.transaction((tx) => {
         tx.executeSql(
-            `UPDATE USERS SET first_name = ?, last_name = ?, dob = ? WHERE UNIQUEHASH = ?`,
-            [firstName, lastName, dob, user_hash]
+            `UPDATE users SET first_name = ?, last_name = ?, dob = ? WHERE unique_hash = ?`,
+            [firstName, lastName, dob, unique_hash]
         );
         tx.executeSql('SELECT * FROM USERS', [], (_, { rows }) =>
             console.log(JSON.stringify(rows))
@@ -30,18 +30,18 @@ const EditProfileScreen = ({navigation}) => {
     const [lastName, setLastName] = useState('');
     const [dob, setDob] = useState('');
 
-    const user_hash = navigation.getParam('user_hash');
+    const unique_hash = navigation.getParam('unique_hash');
 
     useEffect(() => {
         db.transaction((tx) => {
             tx.executeSql(
-                'SELECT * FROM USERS WHERE UNIQUEHASH = ?', 
-                [user_hash],
+                'SELECT * FROM users WHERE unique_hash = ?', 
+                [unique_hash],
                 (_, { rows }) => {
                     const user_object = rows['_array'][0]
-                    setFirstName(user_object['FIRST_NAME']);
-                    setLastName(user_object['LAST_NAME']);
-                    setDob(user_object['DOB']);
+                    setFirstName(user_object['first_name']);
+                    setLastName(user_object['last_name']);
+                    setDob(user_object['dob']);
                 }
             );
         });
@@ -50,7 +50,7 @@ const EditProfileScreen = ({navigation}) => {
     return (
         <View>
             <Text>
-                Hello World! This is EditProfileScreen {user_hash}
+                Hello World! This is EditProfileScreen {unique_hash}
             </Text>
             
             <Text>First Name</Text>
@@ -84,7 +84,7 @@ const EditProfileScreen = ({navigation}) => {
                 title='Submit'
                 onPress={ async () => { 
                     console.log({ firstName, lastName, dob });
-                    await editProfileDetails(firstName, lastName, dob, user_hash);
+                    await editProfileDetails(firstName, lastName, dob, unique_hash);
                     navigation.navigate('mainFlow');
                 }}
             />
