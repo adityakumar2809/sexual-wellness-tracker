@@ -72,8 +72,6 @@ export default () => {
 					);
 				`
 			);
-
-			tx.executeSql('DROP TABLE coituses')
 			
 			tx.executeSql(
 				`CREATE TABLE IF NOT EXISTS
