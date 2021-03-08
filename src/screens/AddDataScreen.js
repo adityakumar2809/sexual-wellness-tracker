@@ -16,6 +16,16 @@ const AddDataScreen = () => {
     const [periodStartDate, setPeriodStartDate] = useState(null)
     const [periodEndDate, setPeriodEndDate] = useState(null)
 
+    const dropTable = () => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                `DELETE FROM periods`,
+                []
+            );
+        });
+        console.log('Database Cleaned!!');
+    }
+
     const addPeriodDates = (periodStartDate, periodEndDate) => {
         db.transaction((tx) => {
             tx.executeSql(
@@ -60,6 +70,13 @@ const AddDataScreen = () => {
                     onPress={ async () => { 
                         console.log({ periodStartDate, periodEndDate });
                         await addPeriodDates(periodStartDate, periodEndDate);
+                    }}
+                />
+
+                <Button
+                    title='Clear Database'
+                    onPress={() => {
+                        dropTable();
                     }}
                 />
             </View>
